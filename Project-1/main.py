@@ -1,18 +1,11 @@
 import uvicorn
-from typing import Union
 from fastapi import FastAPI
+
+from routers.v1 import books_router
 
 app = FastAPI()
 
-
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+app.include_router(books_router.router, prefix="/api/v1", tags=["Books"])
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
