@@ -26,6 +26,23 @@ def to_book_mapper(dto: BookRequest) -> Book:
     )
 
 
+def to_updated_book_mapper(id: int, dto: BookRequest) -> Book:
+    """
+    Maps a BookRequest DTO to a Book entity.
+
+    :param dto: BookRequest object
+    :return: Book object
+    """
+    return Book(
+        id=id,
+        title=dto.title,
+        author=dto.author,
+        description=dto.description,
+        rating=dto.rating,
+        published_date=dto.published_date
+    )
+
+
 def to_book_response_mapper(book: Book) -> BookResponse:
     """
     Maps a BookRequest DTO to a Book entity.
@@ -34,12 +51,14 @@ def to_book_response_mapper(book: Book) -> BookResponse:
     :return: BookResponse object
     """
     return BookResponse(
+        id=book.id,
         title=book.title,
         author=book.author,
         description=book.description,
         rating=book.rating,
         published_date=book.published_date
     )
+
 
 def to_books_response_mapper(books: List[Book]) -> List[BookResponse]:
     """
@@ -48,4 +67,4 @@ def to_books_response_mapper(books: List[Book]) -> List[BookResponse]:
     :param books: List of Book objects
     :return: List of BookResponse objects
     """
-    return [book_response_mapper(book) for book in books]
+    return [to_book_response_mapper(book) for book in books]

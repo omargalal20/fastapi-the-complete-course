@@ -3,7 +3,7 @@ from typing import Optional, List
 from fastapi import APIRouter, HTTPException
 
 from data.library import Book, BOOKS
-from mappers.books import to_book_response_mapper, to_book_mapper, to_books_response_mapper
+from mappers.books_mapper import to_book_response_mapper, to_book_mapper, to_books_response_mapper, to_updated_book_mapper
 from schemas.request.book_request import BookRequest
 from schemas.response.book_response import BookResponse
 
@@ -22,7 +22,7 @@ async def create_one(book_request: BookRequest) -> BookResponse:
 
 
 @router.get("")
-async def get_many(author: Optional[str] = None, rating: Optional[int] = None) -> List[BookResponse]:
+async def get_many(author: Optional[str] = None, rating: Optional[int] = None, published_date: Optional[int] = None) -> List[BookResponse]:
     filtered_books = BOOKS
 
     if author:
@@ -30,6 +30,9 @@ async def get_many(author: Optional[str] = None, rating: Optional[int] = None) -
 
     if rating:
         filtered_books = [book for book in filtered_books if book.rating.__eq__(rating)]
+
+    if published_date:
+        filtered_books = [book for book in filtered_books if book.published_date.__eq__(published_date)]
 
     response = to_books_response_mapper(filtered_books)
 
@@ -50,7 +53,7 @@ async def get_one(id: int) -> BookResponse:
 
 @router.put("/{id}")
 async def update_one(id: int, book_request: BookRequest) -> BookResponse:
-    updated_book: Book = Book(**book_request.model_dump())
+    updated_book: Book = to_updated_book_mapper(id, book_request)
 
     for i in range(len(BOOKS)):
         if BOOKS[i].id.__eq__(id):
