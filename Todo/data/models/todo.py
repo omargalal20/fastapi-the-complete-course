@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 
 from data.database.sqlite import Base
 
@@ -11,3 +11,4 @@ class Todo(Base):
     description = Column(String)
     priority = Column(Integer)
     complete = Column(Boolean, default=False)
+    owner_id = Column(Integer, ForeignKey("User.id"))
