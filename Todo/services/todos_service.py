@@ -34,7 +34,7 @@ class TodosService:
         return todo
 
     def update_one(self, todo_id: int, todo_data: ManageOneRequest) -> Todo:
-        todo = self.get_one(todo_id)
+        todo: Todo = self.get_one(todo_id)
 
         if not todo:
             raise HTTPException(status_code=404, detail="Todo not found")
@@ -49,7 +49,7 @@ class TodosService:
         return updated_todo
 
     def delete_one(self, todo_id: int) -> None:
-        todo = self.get_one(todo_id)
+        todo: Todo = self.get_one(todo_id)
 
         if not todo:
             raise HTTPException(status_code=404, detail="Todo not found")

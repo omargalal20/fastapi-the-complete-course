@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from fastapi import Depends
-from data.database.database import SessionDep
+from data.database.sqlite import SessionDep
 from data.repository.todos_repository import TodosRepository
 from services.todos_service import TodosService
 
