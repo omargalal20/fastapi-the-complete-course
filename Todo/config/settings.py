@@ -10,7 +10,7 @@ def get_env_filename():
     return f".env.{runtime_env}" if runtime_env else ".env"
 
 
-class EnvironmentSettings(BaseSettings):
+class Settings(BaseSettings):
     APP_NAME: str
     APP_VERSION: str
     SQLITE_DATABASE_URL: str
@@ -21,5 +21,5 @@ class EnvironmentSettings(BaseSettings):
 
 
 @lru_cache
-def get_environment_variables():
-    return EnvironmentSettings()
+def get_settings():
+    return Settings()

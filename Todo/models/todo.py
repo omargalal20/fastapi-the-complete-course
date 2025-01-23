@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String, Boolean
 from database.database import Base
 
 
-class Todos(Base):
+class Todo(Base):
     __tablename__ = 'Todo'
 
     id = Column(Integer, primary_key=True, index=True)
