@@ -3,7 +3,7 @@ from typing import Annotated, Type
 from fastapi import APIRouter, Depends
 from starlette import status
 
-from models.todo import Todo
+from data.models.todo import Todo
 from schemas.request.todos_request import ManageOneRequest
 from schemas.response.todos_response import TodosResponse
 from services.todos_service import TodosService

@@ -1,8 +1,8 @@
 from typing import Annotated
 
 from fastapi import Depends
-from database.database import SessionDep
-from repository.todos_repository import TodosRepository
+from data.database.database import SessionDep
+from data.repository.todos_repository import TodosRepository
 from services.todos_service import TodosService
 
 def get_todos_repository(session: SessionDep):

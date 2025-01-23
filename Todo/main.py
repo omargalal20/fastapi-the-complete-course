@@ -2,8 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 
 from config.settings import get_settings
-from database import database
-from models import todo
+from data.database import database
+from data.models import todo
 from routers.v1 import todos
 
 settings = get_settings()

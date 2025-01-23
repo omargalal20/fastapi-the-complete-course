@@ -2,8 +2,8 @@ from typing import Type
 
 from fastapi import HTTPException
 
-from models.todo import Todo
-from repository.todos_repository import TodosRepository
+from data.models.todo import Todo
+from data.repository.todos_repository import TodosRepository
 from schemas.request.todos_request import ManageOneRequest
 
 
