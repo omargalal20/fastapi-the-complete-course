@@ -1,54 +1,36 @@
-from sqlite3 import IntegrityError
 from typing import Type
 
 from fastapi import HTTPException
-from sqlalchemy.orm import Session
 
 from models.todo import Todo
+from repository.todos_repository import TodosRepository
 from schemas.request.todos_request import ManageOneRequest
 
 
 class TodosService:
-    def __init__(self, session: Session):
-        """
-        Initializes the TodosService with a database session.
-
-        :param session: The database session to use for queries
-        """
-        self.session = session
+    def __init__(self, todos_repository: TodosRepository):
+        self.todos_repository = todos_repository
 
     def create_one(self, request: ManageOneRequest) -> Todo:
-        todo = Todo(**request.model_dump())
-        self.session.add(todo)
+        todo: Todo = Todo(**request.model_dump())
 
-        try:
-            self.session.commit()
-            self.session.refresh(todo)
-        except IntegrityError as e:
-            self.session.rollback()
-            raise HTTPException(status_code=400, detail="Error creating Todo")
-        return todo
+        created_todo: Todo = self.todos_repository.create_one(todo)
+
+        return created_todo
 
     def get_many(self) -> list[Type[Todo]]:
-        """
-        Retrieves all todos from the database.
 
-        :return: A list of Todo objects
-        """
-        result = self.session.query(Todo).all()
-        return result
+        todos: list[Type[Todo]] = self.todos_repository.get_many()
+
+        return todos
 
     def get_one(self, todo_id: int) -> Todo:
-        """
-        Retrieves a single todo by its ID.
 
-        :param todo_id: The ID of the todo to retrieve
-        :return: The Todo object if found
-        :raises HTTPException: If the todo is not found
-        """
-        todo = self.session.query(Todo).get(todo_id)
+        todo: Todo | None = self.todos_repository.get_one(todo_id)
+
         if not todo:
             raise HTTPException(status_code=404, detail=f"Todo with id {todo_id} not found")
+
         return todo
 
     def update_one(self, todo_id: int, todo_data: ManageOneRequest) -> Todo:
@@ -62,14 +44,9 @@ class TodosService:
         todo.priority = todo_data.priority
         todo.complete = todo_data.complete
 
-        try:
-            self.session.commit()
-            self.session.refresh(todo)
-        except IntegrityError as e:
-            self.session.rollback()
-            raise HTTPException(status_code=400, detail="Error updating Todo")
+        updated_todo: Todo = self.todos_repository.update_one(todo)
 
-        return todo
+        return updated_todo
 
     def delete_one(self, todo_id: int) -> None:
         todo = self.get_one(todo_id)
@@ -77,10 +54,4 @@ class TodosService:
         if not todo:
             raise HTTPException(status_code=404, detail="Todo not found")
 
-        # Delete the Todo item
-        self.session.delete(todo)
-        try:
-            self.session.commit()
-        except IntegrityError as e:
-            self.session.rollback()
-            raise HTTPException(status_code=400, detail="Error deleting Todo")
+        self.todos_repository.delete_one(todo)
