@@ -1,7 +1,6 @@
-from passlib.hash import pbkdf2_sha256
-
 from data.models.user import User
 from schemas.request.user_request import ManageOneRequest
+from utils.security import get_password_hash
 
 
 def to_user(request: ManageOneRequest) -> User:
@@ -11,7 +10,7 @@ def to_user(request: ManageOneRequest) -> User:
         first_name=request.first_name,
         last_name=request.last_name,
         role=request.role,
-        password=pbkdf2_sha256.hash(request.password),
+        password=get_password_hash(request.password),
         is_active=True
     )
 

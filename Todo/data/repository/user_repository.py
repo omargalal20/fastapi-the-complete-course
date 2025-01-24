@@ -38,6 +38,14 @@ class UserRepository:
 
         return user
 
+    def get_one_by_username(self, username: str) -> User | None:
+        """
+        Retrieves a single user by their username.
+        """
+        user = self.session.query(User).filter(User.username.__eq__(username)).first()
+
+        return user
+
     def update_one(self, updated_user: User) -> User:
         """
         Updates an existing user in the database.
