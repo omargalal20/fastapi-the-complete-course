@@ -7,25 +7,15 @@ from starlette import status
 
 from config.settings import get_settings
 from data.models.user import User
-from routers.dependencies import get_user_service, get_auth_service
-from schemas.request.user_request import ManageOneRequest
+from routers.dependencies import get_auth_service
 from schemas.response.login_response import LoginResponse
-from schemas.response.user_response import UserResponse
 from services.auth_service import AuthService
-from services.user_service import UserService
 from utils.security import create_access_token
 
 router = APIRouter(prefix="/auth")
 
 settings = get_settings()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-
-@router.post("", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-def create_user(todo: ManageOneRequest, service: UserService = Depends(get_user_service)):
-    response: User = service.create_one(todo)
-
-    return response
 
 
 @router.post("/token", response_model=LoginResponse, status_code=status.HTTP_200_OK)

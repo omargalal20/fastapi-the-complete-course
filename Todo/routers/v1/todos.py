@@ -13,7 +13,7 @@ router = APIRouter(prefix="/todos")
 
 
 @router.post("", response_model=TodosResponse, status_code=status.HTTP_201_CREATED)
-def create_todo(todo: ManageOneRequest, service: TodosService = Depends(get_todos_service)):
+def create_one(todo: ManageOneRequest, service: TodosService = Depends(get_todos_service)):
     response: Todo = service.create_one(todo)
 
     return response
@@ -28,14 +28,14 @@ def get_many(
 
 
 @router.get("/{todo_id}", response_model=TodosResponse, status_code=status.HTTP_200_OK)
-def get_todo(todo_id: int, service: Annotated[TodosService, Depends(get_todos_service)]):
+def get_one(todo_id: int, service: Annotated[TodosService, Depends(get_todos_service)]):
     response: Todo = service.get_one(todo_id)
 
     return response
 
 
 @router.put("/{todo_id}", response_model=TodosResponse, status_code=status.HTTP_200_OK)
-def update_todo(
+def update_one(
         todo_id: int,
         todo_data: ManageOneRequest,
         service: Annotated[TodosService, Depends(get_todos_service)]
@@ -46,7 +46,7 @@ def update_todo(
 
 
 @router.delete("/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_todo(
+def delete_one(
         todo_id: int,
         service: Annotated[TodosService, Depends(get_todos_service)]
 ):
