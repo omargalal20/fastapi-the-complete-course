@@ -1,33 +1,33 @@
-from typing import Annotated, Type
+from typing import Type
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from starlette import status
 
 from data.models.user import User
-from routers.dependencies import get_user_service
 from schemas.request.user_request import ManageOneRequest
 from schemas.response.user_response import UserResponse
-from services.user_service import UserService
+from ..dependencies import UserServiceDependency
 
 router = APIRouter(prefix="/users")
 
 
 @router.post("", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-def create_one(request: ManageOneRequest, service: Annotated[UserService, Depends(get_user_service)]):
+def create_one(request: ManageOneRequest, service: UserServiceDependency):
     response: User = service.create_one(request)
 
     return response
 
+
 @router.get("", response_model=list[UserResponse], status_code=status.HTTP_200_OK)
 def get_many(
-        service: Annotated[UserService, Depends(get_user_service)]):
+        service: UserServiceDependency):
     response: list[Type[User]] = service.get_many()
 
     return response
 
 
 @router.get("/{user_id}", response_model=UserResponse, status_code=status.HTTP_200_OK)
-def get_one(user_id: int, service: Annotated[UserService, Depends(get_user_service)]):
+def get_one(user_id: int, service: UserServiceDependency):
     response: User = service.get_one(user_id)
 
     return response
@@ -37,7 +37,7 @@ def get_one(user_id: int, service: Annotated[UserService, Depends(get_user_servi
 def update_one(
         user_id: int,
         request: ManageOneRequest,
-        service: Annotated[UserService, Depends(get_user_service)]
+        service: UserServiceDependency
 ):
     updated_todo = service.update_one(user_id, request)
 
@@ -47,6 +47,6 @@ def update_one(
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_one(
         user_id: int,
-        service: Annotated[UserService, Depends(get_user_service)]
+        service: UserServiceDependency
 ):
     service.delete_one(user_id)

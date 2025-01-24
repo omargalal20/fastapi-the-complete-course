@@ -3,11 +3,13 @@ from typing import Annotated
 from fastapi import Depends
 
 from data.database.sqlite import SessionDep
+from data.models.user import User
 from data.repository.todos_repository import TodosRepository
 from data.repository.user_repository import UserRepository
 from services.auth_service import AuthService
 from services.todos_service import TodosService
 from services.user_service import UserService
+from utils.security import get_authenticated_user
 
 
 def get_todos_repository(session: SessionDep):
@@ -31,3 +33,9 @@ def get_user_service(
 def get_auth_service(
         user_repository: Annotated[UserRepository, Depends(get_user_repository)]) -> AuthService:
     return AuthService(user_repository)
+
+
+TodosServiceDependency = Annotated[TodosService, Depends(get_todos_service)]
+UserServiceDependency = Annotated[UserService, Depends(get_user_service)]
+AuthServiceDependency = Annotated[AuthService, Depends(get_auth_service)]
+AuthenticatedUserDependency = Annotated[User, Depends(get_authenticated_user)]
