@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from data.database.sqlite import SessionDep
+from data.database.postgres import SessionDep
 from data.repository.todos_repository import TodosRepository
 from data.repository.user_repository import UserRepository
 from services.auth.auth_service import AuthService

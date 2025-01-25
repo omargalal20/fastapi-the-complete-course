@@ -2,14 +2,14 @@ import uvicorn
 from fastapi import FastAPI
 
 from config.settings import get_settings
-from data.database import sqlite
+from data.database import postgres
 from data.models import todo, user
 from routers.v1 import todos, auth, users
 
 settings = get_settings()
 
-todo.Base.metadata.create_all(bind=sqlite.engine)
-user.Base.metadata.create_all(bind=sqlite.engine)
+todo.Base.metadata.create_all(bind=postgres.engine)
+user.Base.metadata.create_all(bind=postgres.engine)
 
 app = FastAPI(
     title=settings.APP_NAME,

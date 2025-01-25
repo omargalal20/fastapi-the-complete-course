@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     APP_NAME: str
     APP_VERSION: str
     SQLITE_DATABASE_URL: str
+    POSTGRES_DATABASE_URL: str
     SECRET_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
