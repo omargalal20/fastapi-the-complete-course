@@ -72,5 +72,5 @@ async def authorized_admin(token: TokenDependency):
 
     payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
     user_role: str = payload.get('role')
-    if user_role != Role.ADMIN:
+    if user_role != Role.ADMIN.value:
         raise unauthorized_exception

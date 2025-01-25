@@ -9,6 +9,7 @@ class Role(enum.Enum):
     ADMIN = "ADMIN"
     USER = "USER"
 
+
 class User(Base):
     __tablename__ = 'User'
 
@@ -20,3 +21,4 @@ class User(Base):
     password = Column(String)
     is_active = Column(Boolean, default=True)
     role = Column(Enum(Role))
+    phone_number = Column(String)

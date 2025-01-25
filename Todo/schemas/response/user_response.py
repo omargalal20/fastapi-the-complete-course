@@ -11,6 +11,7 @@ class UserResponse(BaseModel):
     last_name: str = Field(...)
     is_active: bool = Field(...)
     role: Role = Field(...)
+    phone_number: str = Field(...)
 
     class Config:
         json_schema_extra = {
@@ -20,6 +21,7 @@ class UserResponse(BaseModel):
                 "email": "john.doe@example.com",
                 "first_name": "John",
                 "last_name": "Doe",
+                "phone_number": "111-111-1111",
                 "is_active": True,
                 "role": "USER"
             }
