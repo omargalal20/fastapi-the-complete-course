@@ -7,7 +7,9 @@ from starlette import status
 
 from config.settings import get_settings
 from data.models.user import User
+from schemas.request.change_password_request import ChangePasswordRequest
 from schemas.response.login_response import LoginResponse
+from schemas.response.user_response import UserResponse
 from utils.security import create_access_token
 from ..dependencies import AuthServiceDependency, AuthenticatedUserDependency
 
@@ -28,8 +30,20 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     return LoginResponse(access_token=access_token, token_type="bearer")
 
 
-@router.get("/me")
-async def get_me(
+@router.get("/my-profile", response_model=UserResponse, status_code=status.HTTP_200_OK)
+async def get_my_profile(
         authenticated_user: AuthenticatedUserDependency,
+        service: AuthServiceDependency
+) -> UserResponse:
+    response = service.get_my_profile(authenticated_user.id)
+
+    return response
+
+
+@router.post("/change-password", status_code=status.HTTP_202_ACCEPTED)
+async def change_password(
+        request: ChangePasswordRequest,
+        authenticated_user: AuthenticatedUserDependency,
+        service: AuthServiceDependency
 ):
-    return authenticated_user
+    service.change_password(authenticated_user.id, request)

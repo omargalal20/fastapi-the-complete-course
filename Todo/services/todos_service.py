@@ -7,6 +7,7 @@ from data.models.user import User, Role
 from data.repository.todos_repository import TodosRepository
 from mappers import todo_mapper
 from schemas.request.todos_request import ManageOneRequest
+from utils.security import AuthenticatedUser
 
 
 class TodosService:
@@ -19,7 +20,7 @@ class TodosService:
 
         return created_todo
 
-    def get_many(self, authenticated_user: User) -> list[Type[Todo]]:
+    def get_many(self, authenticated_user: AuthenticatedUser) -> list[Type[Todo]]:
 
         todos: list[Type[
             Todo]] = self.todos_repository.get_many() if authenticated_user.role == Role.ADMIN \

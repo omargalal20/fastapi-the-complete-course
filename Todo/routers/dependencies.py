@@ -9,7 +9,7 @@ from data.repository.user_repository import UserRepository
 from services.auth_service import AuthService
 from services.todos_service import TodosService
 from services.user_service import UserService
-from utils.security import get_authenticated_user, authorized_admin
+from utils.security import get_authenticated_user, authorized_admin, AuthenticatedUser
 
 
 def get_todos_repository(session: SessionDep):
@@ -38,5 +38,6 @@ def get_auth_service(
 TodosServiceDependency = Annotated[TodosService, Depends(get_todos_service)]
 UserServiceDependency = Annotated[UserService, Depends(get_user_service)]
 AuthServiceDependency = Annotated[AuthService, Depends(get_auth_service)]
-AuthenticatedUserDependency = Annotated[User, Depends(get_authenticated_user)]
-AuthenticatedAdminDependency = Depends(authorized_admin)
+AuthenticatedUserDependency = Annotated[AuthenticatedUser, Depends(get_authenticated_user)]
+isAuthenticatedUserDependency = Depends(get_authenticated_user)
+isAuthenticatedAdminDependency = Depends(authorized_admin)

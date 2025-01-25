@@ -4,14 +4,22 @@ import jwt
 from fastapi import HTTPException, status
 from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
+from pydantic import BaseModel
 
 from config.settings import get_settings
-from data.models.user import User, Role
-from utils.dependencies import TokenDependency, UserRepositoryDependency
+from data.models.user import Role
+from data.models.user import User
+from utils.dependencies import TokenDependency
 
 settings = get_settings()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+class AuthenticatedUser(BaseModel):
+    id: int
+    username: str
+    role: Role
 
 
 def verify_password(plain_password, hashed_password):
@@ -33,7 +41,7 @@ def create_access_token(user: User, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-async def get_authenticated_user(token: TokenDependency, user_repository: UserRepositoryDependency) -> User:
+async def get_authenticated_user(token: TokenDependency) -> AuthenticatedUser:
     unauthenticated_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not authenticate credentials",
@@ -47,8 +55,11 @@ async def get_authenticated_user(token: TokenDependency, user_repository: UserRe
         user_role: str = payload.get('role')
         if username is None or user_id is None or user_role is None:
             raise unauthenticated_exception
-        user = user_repository.get_one_by_username(username)
-        return user
+        return AuthenticatedUser(
+            id=user_id,
+            username=username,
+            role=Role(user_role)
+        )
     except InvalidTokenError:
         raise unauthenticated_exception
 
