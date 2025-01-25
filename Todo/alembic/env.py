@@ -13,6 +13,12 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+from config.settings import get_settings
+
+settings = get_settings()
+POSTGRES_DATABASE_URL = settings.POSTGRES_DATABASE_URL
+config.set_main_option('sqlalchemy.url', POSTGRES_DATABASE_URL)
+
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
