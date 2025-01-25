@@ -42,9 +42,9 @@ def update_one(
         request: ManageOneRequest,
         service: UserServiceDependency
 ):
-    updated_todo = service.update_one(user_id, request)
+    updated_user = service.update_one(user_id, request)
 
-    return updated_todo
+    return updated_user
 
 
 @router.delete("/{user_id}", dependencies=[isAuthenticatedAdminDependency], status_code=status.HTTP_204_NO_CONTENT)
