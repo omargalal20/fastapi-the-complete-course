@@ -6,6 +6,8 @@ from data.repository.user_repository import UserRepository
 from schemas.request.change_password_request import ChangePasswordRequest
 from utils.security import verify_password, get_password_hash
 
+from .validation import AuthValidator
+
 
 class AuthService:
     def __init__(self, user_repository: UserRepository):
@@ -35,13 +37,7 @@ class AuthService:
     def change_password(self, user_id: int, request: ChangePasswordRequest):
         user: User = self.user_repository.get_one(user_id)
 
-        old_password_validation_exception = HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Enter correct old password",
-        )
-
-        if not verify_password(request.old_password, user.password):
-            raise old_password_validation_exception
+        AuthValidator.change_password_validator(request.old_password, user.password)
 
         user.password = get_password_hash(request.new_password)
 

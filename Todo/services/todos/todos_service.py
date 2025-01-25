@@ -3,11 +3,12 @@ from typing import Type
 from fastapi import HTTPException
 
 from data.models.todo import Todo
-from data.models.user import User, Role
+from data.models.user import Role
 from data.repository.todos_repository import TodosRepository
 from mappers import todo_mapper
 from schemas.request.todos_request import ManageOneRequest
 from utils.security import AuthenticatedUser
+from .validation import TodosValidator
 
 
 class TodosService:
@@ -28,17 +29,19 @@ class TodosService:
 
         return todos
 
-    def get_one(self, todo_id: int) -> Todo:
+    def get_one(self, todo_id: int, authenticated_user: AuthenticatedUser) -> Todo:
 
         todo: Todo | None = self.todos_repository.get_one(todo_id)
+
+        TodosValidator.verify_ownership(todo.owner_id, authenticated_user)
 
         if not todo:
             raise HTTPException(status_code=404, detail=f"Todo with id {todo_id} not found")
 
         return todo
 
-    def update_one(self, todo_id: int, request: ManageOneRequest) -> Todo:
-        todo: Todo = self.get_one(todo_id)
+    def update_one(self, todo_id: int, request: ManageOneRequest, authenticated_user: AuthenticatedUser) -> Todo:
+        todo: Todo = self.get_one(todo_id, authenticated_user)
 
         if not todo:
             raise HTTPException(status_code=404, detail="Todo not found")
@@ -47,8 +50,8 @@ class TodosService:
 
         return self.todos_repository.update_one(updated_todo)
 
-    def delete_one(self, todo_id: int) -> None:
-        todo: Todo = self.get_one(todo_id)
+    def delete_one(self, todo_id: int, authenticated_user: AuthenticatedUser) -> None:
+        todo: Todo = self.get_one(todo_id, authenticated_user)
 
         if not todo:
             raise HTTPException(status_code=404, detail="Todo not found")

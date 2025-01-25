@@ -30,7 +30,7 @@ def get_many(
 
 @router.get("/{todo_id}", response_model=TodosResponse, status_code=status.HTTP_200_OK)
 def get_one(todo_id: int, service: TodosServiceDependency, authenticated_user: AuthenticatedUserDependency):
-    response: Todo = service.get_one(todo_id)
+    response: Todo = service.get_one(todo_id, authenticated_user)
 
     return response
 
@@ -42,7 +42,7 @@ def update_one(
         service: TodosServiceDependency,
         authenticated_user: AuthenticatedUserDependency
 ):
-    updated_todo = service.update_one(todo_id, request)
+    updated_todo = service.update_one(todo_id, request, authenticated_user)
 
     return updated_todo
 
@@ -53,4 +53,4 @@ def delete_one(
         service: TodosServiceDependency,
         authenticated_user: AuthenticatedUserDependency
 ):
-    service.delete_one(todo_id)
+    service.delete_one(todo_id, authenticated_user)
