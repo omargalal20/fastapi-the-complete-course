@@ -10,7 +10,7 @@ from data.models.user import User
 from schemas.request.change_password_request import ChangePasswordRequest
 from schemas.response.login_response import LoginResponse
 from schemas.response.user_response import UserResponse
-from utils.security import create_access_token
+from middleware.security import create_access_token
 from ..dependencies import AuthServiceDependency, AuthenticatedUserDependency
 
 router = APIRouter(prefix="/auth")

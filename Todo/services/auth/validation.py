@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from starlette import status
 
-from utils.security import verify_password
+from middleware.security import verify_password
 
 
 class AuthValidator:

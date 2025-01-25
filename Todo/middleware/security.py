@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from config.settings import get_settings
 from data.models.user import Role
 from data.models.user import User
-from utils.dependencies import TokenDependency
+from middleware.dependencies import TokenDependency
 
 settings = get_settings()
 
