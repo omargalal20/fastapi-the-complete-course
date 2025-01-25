@@ -9,7 +9,6 @@ from config.settings import get_settings
 
 env = get_settings()
 
-connect_args = {"check_same_thread": False}
 engine = create_engine(
     env.POSTGRES_DATABASE_URL
 )
