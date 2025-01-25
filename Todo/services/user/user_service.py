@@ -4,8 +4,8 @@ from fastapi import HTTPException
 
 from data.models.user import User
 from data.repository.user_repository import UserRepository
-from mappers import user_mapper
 from schemas.request.user_request import ManageOneRequest
+from . import user_mapper
 
 
 class UserService:

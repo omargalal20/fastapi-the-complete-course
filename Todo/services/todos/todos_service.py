@@ -5,9 +5,9 @@ from fastapi import HTTPException
 from data.models.todo import Todo
 from data.models.user import Role
 from data.repository.todos_repository import TodosRepository
-from mappers import todo_mapper
 from schemas.request.todos_request import ManageOneRequest
 from utils.security import AuthenticatedUser
+from . import todo_mapper
 from .validation import TodosValidator
 
 
