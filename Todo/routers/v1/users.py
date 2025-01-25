@@ -6,7 +6,7 @@ from starlette import status
 from data.models.user import User
 from schemas.request.user_request import ManageOneRequest
 from schemas.response.user_response import UserResponse
-from ..dependencies import UserServiceDependency
+from ..dependencies import UserServiceDependency, AuthenticatedAdminDependency
 
 router = APIRouter(prefix="/users")
 
@@ -18,7 +18,8 @@ def create_one(request: ManageOneRequest, service: UserServiceDependency):
     return response
 
 
-@router.get("", response_model=list[UserResponse], status_code=status.HTTP_200_OK)
+@router.get("", dependencies=[AuthenticatedAdminDependency], response_model=list[UserResponse],
+            status_code=status.HTTP_200_OK)
 def get_many(
         service: UserServiceDependency):
     response: list[Type[User]] = service.get_many()
@@ -26,14 +27,16 @@ def get_many(
     return response
 
 
-@router.get("/{user_id}", response_model=UserResponse, status_code=status.HTTP_200_OK)
+@router.get("/{user_id}", dependencies=[AuthenticatedAdminDependency], response_model=UserResponse,
+            status_code=status.HTTP_200_OK)
 def get_one(user_id: int, service: UserServiceDependency):
     response: User = service.get_one(user_id)
 
     return response
 
 
-@router.put("/{user_id}", response_model=UserResponse, status_code=status.HTTP_200_OK)
+@router.put("/{user_id}", dependencies=[AuthenticatedAdminDependency], response_model=UserResponse,
+            status_code=status.HTTP_200_OK)
 def update_one(
         user_id: int,
         request: ManageOneRequest,
@@ -44,7 +47,7 @@ def update_one(
     return updated_todo
 
 
-@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{user_id}", dependencies=[AuthenticatedAdminDependency], status_code=status.HTTP_204_NO_CONTENT)
 def delete_one(
         user_id: int,
         service: UserServiceDependency

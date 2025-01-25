@@ -25,6 +25,10 @@ class TodosRepository:
 
         return self.session.query(Todo).all()
 
+    def get_many_by_user_id(self, user_id: int) -> list[Type[Todo]]:
+
+        return self.session.query(Todo).filter(Todo.owner_id.__eq__(user_id)).all()
+
     def get_one(self, todo_id: int) -> Todo | None:
         todo = self.session.query(Todo).filter(Todo.id.__eq__(todo_id)).first()
 
