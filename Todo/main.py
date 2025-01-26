@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 
-from config.settings import get_settings
-from data.database import postgres
-from data.models import todo, user
-from routers.v1 import todos, auth, users
+from .config.settings import get_settings
+from .data.database import postgres
+from .data.models import todo, user
+from .routers.v1 import todos, auth, users
 
 settings = get_settings()
 
@@ -15,6 +15,12 @@ app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
 )
+
+
+@app.get("/healthy")
+def health_check():
+    return {'status': 'Healthy'}
+
 
 app.include_router(todos.router, prefix="/api/v1", tags=["Todo"])
 app.include_router(auth.router, prefix="/api/v1", tags=["Auth"])

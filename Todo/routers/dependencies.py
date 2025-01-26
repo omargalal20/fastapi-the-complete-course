@@ -2,13 +2,13 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from data.database.postgres import SessionDep
-from data.repository.todos_repository import TodosRepository
-from data.repository.user_repository import UserRepository
-from services.auth.auth_service import AuthService
-from services.todos.todos_service import TodosService
-from services.user.user_service import UserService
-from middleware.security import get_authenticated_user, authorized_admin, AuthenticatedUser
+from ..data.database.postgres import SessionDep
+from ..data.repository.todos_repository import TodosRepository
+from ..data.repository.user_repository import UserRepository
+from ..middleware.security import get_authenticated_user, authorized_admin, AuthenticatedUser
+from ..services.auth.auth_service import AuthService
+from ..services.todos.todos_service import TodosService
+from ..services.user.user_service import UserService
 
 
 def get_todos_repository(session: SessionDep):

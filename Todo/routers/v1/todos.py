@@ -3,9 +3,9 @@ from typing import Type
 from fastapi import APIRouter
 from starlette import status
 
-from data.models.todo import Todo
-from schemas.request.todos_request import ManageOneRequest
-from schemas.response.todos_response import TodosResponse
+from ...data.models.todo import Todo
+from ...schemas.request.todos_request import ManageOneRequest
+from ...schemas.response.todos_response import TodosResponse
 from ..dependencies import TodosServiceDependency, AuthenticatedUserDependency
 
 router = APIRouter(prefix="/todos")

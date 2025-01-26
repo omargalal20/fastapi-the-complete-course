@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from data.models.user import User
+from ...data.models.user import User
 
 
 class UserRepository:

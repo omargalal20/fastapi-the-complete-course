@@ -5,13 +5,13 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from starlette import status
 
-from config.settings import get_settings
-from data.models.user import User
-from schemas.request.change_password_request import ChangePasswordRequest
-from schemas.response.login_response import LoginResponse
-from schemas.response.user_response import UserResponse
-from middleware.security import create_access_token
 from ..dependencies import AuthServiceDependency, AuthenticatedUserDependency
+from ...config.settings import get_settings
+from ...data.models.user import User
+from ...middleware.security import create_access_token
+from ...schemas.request.change_password_request import ChangePasswordRequest
+from ...schemas.response.login_response import LoginResponse
+from ...schemas.response.user_response import UserResponse
 
 router = APIRouter(prefix="/auth")
 

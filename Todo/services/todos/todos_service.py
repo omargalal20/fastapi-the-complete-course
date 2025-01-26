@@ -2,13 +2,13 @@ from typing import Type
 
 from fastapi import HTTPException
 
-from data.models.todo import Todo
-from data.models.user import Role
-from data.repository.todos_repository import TodosRepository
-from schemas.request.todos_request import ManageOneRequest
-from middleware.security import AuthenticatedUser
 from . import todo_mapper
 from .validation import TodosValidator
+from ...data.models.todo import Todo
+from ...data.models.user import Role
+from ...data.repository.todos_repository import TodosRepository
+from ...middleware.security import AuthenticatedUser
+from ...schemas.request.todos_request import ManageOneRequest
 
 
 class TodosService:

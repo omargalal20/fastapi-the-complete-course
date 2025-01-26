@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, EmailStr
 
-from data.models.user import Role
+from ...data.models.user import Role
 
 
 class ManageOneRequest(BaseModel):
