@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 
-from .config.settings import get_settings
-from .data.database import postgres
-from .data.models import todo, user
-from .routers.v1 import todos, auth, users
+from Todo.config.settings import get_settings
+from Todo.data.database import postgres
+from Todo.data.models import todo, user
+from Todo.routers.v1 import todos, auth, users
 
 settings = get_settings()
 
