@@ -9,7 +9,7 @@ app.dependency_overrides[get_db] = override_get_db
 app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
 
 
-def test_get_many_authenticated(test_todos):
+def test_get_many_authenticated(test_users_and_admins, test_todos):
     response = client.get("/api/v1/todos")
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == test_get_many_todos_authenticated_response
@@ -29,7 +29,7 @@ def test_get_one_authenticated_not_owner(test_users_and_admins, test_todos):
     assert response.json() == {'detail': 'You are not authorized to perform this action'}
 
 
-def test_get_one_authenticated_not_found(test_todos):
+def test_get_one_authenticated_not_found(test_users_and_admins, test_todos):
     test_todo_id = 999
     response = client.get(f"/api/v1/todos/{test_todo_id}")
     assert response.status_code == status.HTTP_404_NOT_FOUND

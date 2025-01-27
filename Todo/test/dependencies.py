@@ -45,7 +45,7 @@ async def override_get_authenticated_admin() -> AuthenticatedUser:
     return AuthenticatedUser(
         username="adminjohndoe",
         id=3,
-        role=Role.USER
+        role=Role.ADMIN
     )
 
 

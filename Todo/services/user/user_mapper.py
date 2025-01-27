@@ -11,7 +11,8 @@ def to_user(request: ManageOneRequest) -> User:
         last_name=request.last_name,
         role=request.role,
         password=get_password_hash(request.password),
-        is_active=True
+        is_active=request.is_active,
+        phone_number=request.phone_number
     )
 
     return created_user
@@ -25,5 +26,6 @@ def update_user(user: User, request: ManageOneRequest) -> User:
     user.password = request.password
     user.is_active = request.is_active
     user.role = request.role
+    user.phone_number = request.phone_number
 
     return user

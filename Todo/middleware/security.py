@@ -1,7 +1,7 @@
 from datetime import timedelta, datetime, timezone
 
 import jwt
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Depends
 from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 from pydantic import BaseModel
@@ -64,13 +64,11 @@ async def get_authenticated_user(token: TokenDependency) -> AuthenticatedUser:
         raise unauthenticated_exception
 
 
-async def authorized_admin(token: TokenDependency):
+async def authorized_admin(user: AuthenticatedUser = Depends(get_authenticated_user)):
     unauthorized_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are not authorized to perform this action",
     )
-
-    payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-    user_role: str = payload.get('role')
-    if user_role != Role.ADMIN.value:
+    user_role: Role = user.role
+    if user_role != Role.ADMIN:
         raise unauthorized_exception
