@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 
-from Todos.config.settings import get_settings
-from Todos.data.database import postgres
-from Todos.data.models import todo, user
-from Todos.routers.v1 import todos, auth, users
+from config.settings import get_settings
+from data.database import postgres
+from data.models import todo, user
+from routers.v1 import todos, auth, users
 
 settings = get_settings()
 

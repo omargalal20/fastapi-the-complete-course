@@ -2,7 +2,7 @@ import enum
 
 from sqlalchemy import Column, Integer, String, Boolean, Enum
 
-from ...data.database.postgres import Base
+from data.database.postgres import Base
 
 
 class Role(enum.Enum):

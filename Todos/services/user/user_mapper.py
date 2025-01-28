@@ -1,6 +1,6 @@
-from ...data.models.user import User
-from ...schemas.request.user_request import ManageOneRequest
-from ...middleware.security import get_password_hash
+from data.models.user import User
+from schemas.request.user_request import ManageOneRequest
+from middleware.security import get_password_hash
 
 
 def to_user(request: ManageOneRequest) -> User:

@@ -4,9 +4,9 @@ from fastapi import APIRouter
 from starlette import status
 
 from ..dependencies import UserServiceDependency, isAuthenticatedAdminDependency
-from ...data.models.user import User
-from ...schemas.request.user_request import ManageOneRequest
-from ...schemas.response.user_response import UserResponse
+from data.models.user import User
+from schemas.request.user_request import ManageOneRequest
+from schemas.response.user_response import UserResponse
 
 router = APIRouter(prefix="/users")
 

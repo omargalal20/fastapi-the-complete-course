@@ -1,5 +1,5 @@
-from ...data.models.todo import Todo
-from ...schemas.request.todos_request import ManageOneRequest
+from data.models.todo import Todo
+from schemas.request.todos_request import ManageOneRequest
 
 
 def to_todo(request: ManageOneRequest, owner_id: int) -> Todo:

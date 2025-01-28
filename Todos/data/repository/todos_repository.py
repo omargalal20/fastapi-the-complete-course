@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from ...data.models.todo import Todo
+from data.models.todo import Todo
 
 
 class TodosRepository:

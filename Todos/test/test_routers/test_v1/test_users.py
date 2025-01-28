@@ -1,8 +1,8 @@
 from fastapi import status
 
+from data.database.postgres import get_db
+from middleware.security import get_authenticated_user
 from ...dependencies import *
-from ....data.database.postgres import get_db
-from ....middleware.security import get_authenticated_user
 
 
 def test_create_one_authenticated_admin_valid_request(test_users_and_admins):

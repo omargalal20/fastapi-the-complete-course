@@ -2,10 +2,10 @@ from fastapi import HTTPException
 from starlette import status
 
 from .validation import AuthValidator
-from ...data.models.user import User
-from ...data.repository.user_repository import UserRepository
-from ...middleware.security import verify_password, get_password_hash
-from ...schemas.request.change_password_request import ChangePasswordRequest
+from data.models.user import User
+from data.repository.user_repository import UserRepository
+from middleware.security import verify_password, get_password_hash
+from schemas.request.change_password_request import ChangePasswordRequest
 
 
 class AuthService:

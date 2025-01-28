@@ -1,8 +1,8 @@
 from fastapi import HTTPException
 from starlette import status
 
-from ...data.models.user import Role
-from ...middleware.security import AuthenticatedUser
+from data.models.user import Role
+from middleware.security import AuthenticatedUser
 
 
 class TodosValidator:

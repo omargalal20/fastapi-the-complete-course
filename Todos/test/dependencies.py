@@ -4,12 +4,12 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from ..data.models import todo, user
-from ..data.models.todo import Todo
-from ..data.models.user import Role, User
-from ..main import app
-from ..middleware.security import AuthenticatedUser
-from ..middleware.security import get_password_hash
+from data.models import todo, user
+from data.models.todo import Todo
+from data.models.user import Role, User
+from main import app
+from middleware.security import AuthenticatedUser
+from middleware.security import get_password_hash
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test/testdb.db"
 

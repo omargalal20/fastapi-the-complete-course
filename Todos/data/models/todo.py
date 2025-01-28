@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 
-from ...data.database.postgres import Base
+from data.database.postgres import Base
 
 
 class Todo(Base):

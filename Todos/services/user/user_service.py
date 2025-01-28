@@ -2,9 +2,9 @@ from typing import Type
 
 from fastapi import HTTPException
 
-from ...data.models.user import User
-from ...data.repository.user_repository import UserRepository
-from ...schemas.request.user_request import ManageOneRequest
+from data.models.user import User
+from data.repository.user_repository import UserRepository
+from schemas.request.user_request import ManageOneRequest
 from . import user_mapper
 
 

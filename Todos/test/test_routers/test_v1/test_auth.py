@@ -1,8 +1,8 @@
 from fastapi import status
 
 from ...dependencies import *
-from ....data.database.postgres import get_db
-from ....middleware.security import get_authenticated_user
+from data.database.postgres import get_db
+from middleware.security import get_authenticated_user
 
 
 def test_login_success(test_users_and_admins):
