@@ -69,7 +69,7 @@ def test_todos():
     yield todos
 
     with engine.connect() as connection:
-        connection.execute(text("DELETE FROM Todos;"))
+        connection.execute(text("DELETE FROM Todo;"))
         connection.commit()
 
 
