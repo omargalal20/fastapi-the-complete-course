@@ -41,7 +41,7 @@ def create_access_token(user: User, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-async def get_authenticated_user(token: TokenDependency) -> AuthenticatedUser:
+def get_authenticated_user(token: TokenDependency) -> AuthenticatedUser:
     unauthenticated_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not authenticate credentials",
@@ -64,7 +64,7 @@ async def get_authenticated_user(token: TokenDependency) -> AuthenticatedUser:
         raise unauthenticated_exception
 
 
-async def authorized_admin(user: AuthenticatedUser = Depends(get_authenticated_user)):
+def authorized_admin(user: AuthenticatedUser = Depends(get_authenticated_user)):
     unauthorized_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are not authorized to perform this action",

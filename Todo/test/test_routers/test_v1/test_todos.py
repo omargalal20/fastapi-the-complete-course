@@ -5,17 +5,20 @@ from ...utils import *
 from ....data.database.postgres import get_db
 from ....middleware.security import get_authenticated_user
 
-app.dependency_overrides[get_db] = override_get_db
-app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
-
 
 def test_get_many_authenticated(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     response = client.get("/api/v1/todos")
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == test_get_many_todos_authenticated_response
 
 
 def test_get_one_authenticated(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 1
     response = client.get(f"/api/v1/todos/{test_todo_id}")
     assert response.status_code == status.HTTP_200_OK
@@ -23,6 +26,9 @@ def test_get_one_authenticated(test_users_and_admins, test_todos):
 
 
 def test_get_one_authenticated_not_owner(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 2
     response = client.get(f"/api/v1/todos/{test_todo_id}")
     assert response.status_code == status.HTTP_403_FORBIDDEN
@@ -30,6 +36,9 @@ def test_get_one_authenticated_not_owner(test_users_and_admins, test_todos):
 
 
 def test_get_one_authenticated_not_found(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 999
     response = client.get(f"/api/v1/todos/{test_todo_id}")
     assert response.status_code == status.HTTP_404_NOT_FOUND
@@ -37,6 +46,9 @@ def test_get_one_authenticated_not_found(test_users_and_admins, test_todos):
 
 
 def test_create_one_authenticated(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_create_one_request = {
         "title": "Complete FastAPI Course",
         "description": "Finish the FastAPI course by the end of the week",
@@ -62,6 +74,9 @@ def test_create_one_authenticated(test_users_and_admins, test_todos):
 
 
 def test_create_one_authenticated_invalid_request():
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_request = {
         "title": "",
         "description": "",
@@ -113,6 +128,9 @@ def test_create_one_authenticated_invalid_request():
 
 
 def test_update_one_authenticated(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 1
     test_create_one_request = {
         "title": "Complete FastAPI Course",
@@ -140,6 +158,9 @@ def test_update_one_authenticated(test_users_and_admins, test_todos):
 
 
 def test_update_one_authenticated_not_owner(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 2
     test_update_one_request = {
         "title": "Complete FastAPI Course",
@@ -153,6 +174,9 @@ def test_update_one_authenticated_not_owner(test_users_and_admins, test_todos):
 
 
 def test_update_one_authenticated_invalid_request():
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 1
     test_update_one_request = {
         "title": "",
@@ -205,6 +229,9 @@ def test_update_one_authenticated_invalid_request():
 
 
 def test_update_one_authenticated_not_found(test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 999
     test_update_one_request = {
         "title": "Complete FastAPI Course",
@@ -218,6 +245,9 @@ def test_update_one_authenticated_not_found(test_todos):
 
 
 def test_delete_one_authenticated(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 1
 
     test_delete_one_response = client.delete(f"/api/v1/todos/{test_todo_id}")
@@ -229,6 +259,9 @@ def test_delete_one_authenticated(test_users_and_admins, test_todos):
 
 
 def test_delete_one_authenticated_not_owner(test_users_and_admins, test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 2
     response = client.get(f"/api/v1/todos/{test_todo_id}")
     assert response.status_code == status.HTTP_403_FORBIDDEN
@@ -236,6 +269,9 @@ def test_delete_one_authenticated_not_owner(test_users_and_admins, test_todos):
 
 
 def test_delete_one_authenticated_not_found(test_todos):
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_authenticated_user] = override_get_authenticated_user
+
     test_todo_id = 999
     response = client.get(f"/api/v1/todos/{test_todo_id}")
     assert response.status_code == status.HTTP_404_NOT_FOUND

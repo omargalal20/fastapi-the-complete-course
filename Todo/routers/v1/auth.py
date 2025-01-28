@@ -31,7 +31,7 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 
 
 @router.get("/my-profile", response_model=UserResponse, status_code=status.HTTP_200_OK)
-async def get_my_profile(
+def get_my_profile(
         authenticated_user: AuthenticatedUserDependency,
         service: AuthServiceDependency
 ) -> UserResponse:
@@ -41,7 +41,7 @@ async def get_my_profile(
 
 
 @router.post("/change-password", status_code=status.HTTP_202_ACCEPTED)
-async def change_password(
+def change_password(
         request: ChangePasswordRequest,
         authenticated_user: AuthenticatedUserDependency,
         service: AuthServiceDependency
