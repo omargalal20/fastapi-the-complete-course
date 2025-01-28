@@ -1,3 +1,5 @@
+import logging
+
 import uvicorn
 from fastapi import FastAPI
 
@@ -11,10 +13,24 @@ settings = get_settings()
 todo.Base.metadata.create_all(bind=postgres.engine)
 user.Base.metadata.create_all(bind=postgres.engine)
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+
+logger = logging.getLogger(__name__)
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
 )
+
+
+@app.middleware("http")
+async def log_requests(request, call_next):
+    logger.info(f"Incoming request: {request.method} {request.url}")
+    response = await call_next(request)
+    return response
 
 
 @app.get("/healthy")
