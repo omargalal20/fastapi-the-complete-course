@@ -18,7 +18,7 @@ class TodosRepository:
             self.session.refresh(todo)
         except IntegrityError:
             self.session.rollback()
-            raise HTTPException(status_code=400, detail="Error creating Todo")
+            raise HTTPException(status_code=400, detail="Error creating Todos")
         return todo
 
     def get_many(self) -> list[Type[Todo]]:
@@ -40,7 +40,7 @@ class TodosRepository:
             self.session.refresh(updated_todo)
         except IntegrityError:
             self.session.rollback()
-            raise HTTPException(status_code=400, detail="Error updating Todo")
+            raise HTTPException(status_code=400, detail="Error updating Todos")
         return updated_todo
 
     def delete_one(self, todo: Todo) -> None:
@@ -49,4 +49,4 @@ class TodosRepository:
             self.session.commit()
         except IntegrityError:
             self.session.rollback()
-            raise HTTPException(status_code=400, detail="Error deleting Todo")
+            raise HTTPException(status_code=400, detail="Error deleting Todos")
